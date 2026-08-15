@@ -1,0 +1,4 @@
+.env
+node_modules/
+data/local-demo.json
+.DS_Store
