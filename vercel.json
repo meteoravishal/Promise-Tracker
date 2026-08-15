@@ -1,6 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "api/[...path].js": { "maxDuration": 60 }
-  }
+    "api/[...path].js": { "maxDuration": 60 },
+    "api/gmail/[...action].js": { "maxDuration": 60 },
+    "api/cron/gmail.js": { "maxDuration": 60 }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/gmail",
+      "schedule": "0 * * * *"
+    }
+  ]
 }
