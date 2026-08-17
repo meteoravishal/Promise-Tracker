@@ -1,0 +1,22 @@
+{
+  "name": "Promise Tracker",
+  "short_name": "Promise Tracker",
+  "description": "AI memory for commitments from SMS, WhatsApp, Gmail and more.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#eef2f7",
+  "theme_color": "#111827",
+  "icons": [
+    {"src":"/promise-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ],
+  "share_target": {
+    "action": "/share.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}
