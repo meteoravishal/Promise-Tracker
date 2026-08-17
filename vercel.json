@@ -5,8 +5,8 @@
     "api/gmail/[...action].js": { "maxDuration": 60 },
     "api/cron/gmail.js": { "maxDuration": 60 }
   },
-  "rewrites": [
-    { "source": "/", "destination": "/fixed.html" }
+  "redirects": [
+    { "source": "/", "destination": "/fixed.html", "permanent": false }
   ],
   "crons": [
     {
