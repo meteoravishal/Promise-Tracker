@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Promise Tracker</title><style>html,body,iframe{margin:0;width:100%;height:100%;border:0;overflow:hidden}body{background:#f5f7fb}</style></head><body><iframe id="app" src="/index.html"></iframe><script>
+const frame=document.getElementById('app');
+frame.addEventListener('load',()=>{
+  const w=frame.contentWindow,d=frame.contentDocument;
+  d.addEventListener('click',async e=>{
+    const btn=e.target.closest?.('.act[data-a="done"],.act[data-a="reopen"]');
+    if(!btn)return;
+    e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+    const id=btn.dataset.id, target=btn.dataset.a==='done'?'done':'open';
+    const old=btn.textContent;btn.disabled=true;btn.textContent=target==='done'?'Saving…':'Reopening…';
+    try{
+      const listRes=await w.fetch('/api/promises',{credentials:'same-origin'});
+      const list=await listRes.json();
+      if(!listRes.ok)throw new Error(list.error||'Could not load promises');
+      const p=list.find(x=>x.id===id);if(!p)throw new Error('Promise not found');
+      const r=await w.fetch('/api/promises/'+encodeURIComponent(id),{method:'PUT',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({...p,status:target})});
+      const out=await r.json().catch(()=>({}));if(!r.ok)throw new Error(out.error||out.detail||'Could not update promise');
+      w.location.reload();
+    }catch(err){btn.disabled=false;btn.textContent=old;w.alert(err.message||'Could not update promise');}
+  },true);
+});
+</script></body></html>
